@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: blog-db-postgre
+    ports:
+      - "5431:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: rahat
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: blog_db
+
+
+  adminer:
+    image: adminer:latest
+    container_name: blog-db-view
+    restart: always
+    ports:
+      - "8888:8080"
