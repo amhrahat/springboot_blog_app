@@ -1,10 +1,8 @@
 package com.rahat.blog.domain.entities;
 
-import com.rahat.blog.domain.PostStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;

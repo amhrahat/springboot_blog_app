@@ -21,11 +21,16 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Post> posts = new ArrayList<>();
 
-    public Category(UUID id, String name, List<Post> posts) {
+//    public Category(UUID id, String name, List<Post> posts) {
+//        this.id = id;
+//        this.name = name;
+//        this.posts = posts;
+//    }
+    public Category(UUID id, String name) {
         this.id = id;
         this.name = name;
-        this.posts = posts;
-    }
+
+}
 
     public Category() {
     }
