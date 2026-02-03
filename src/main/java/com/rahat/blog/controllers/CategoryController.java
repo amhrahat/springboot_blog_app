@@ -9,10 +9,10 @@ import com.rahat.blog.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1/categories")
@@ -26,7 +26,7 @@ public class CategoryController {
         this.categoryMapper = categoryMapper;
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<CategoryDto> createCategory(
             @Valid @RequestBody CreateCategoryDto createCategoryDto
             ){
@@ -35,8 +35,21 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(categoryDto);
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CategoryDto>> viewCategory(){
+        List<CategoryDto> dtos = categoryService.categoryLists();
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(dtos);
+    }
+
+    @DeleteMapping(path = "/{categoryId}")
+    public ResponseEntity<Void> deleteCategory(
+            @PathVariable UUID categoryId){
+        categoryService.deleteCategory(categoryId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
-    public ResponseEntity<>
 }
