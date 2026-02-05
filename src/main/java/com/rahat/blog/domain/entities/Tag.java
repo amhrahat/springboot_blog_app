@@ -21,12 +21,15 @@ public class Tag {
     @ManyToMany(mappedBy = "tags")
     private Set<Post> posts = new HashSet<>();
 
-    public Tag(UUID id, String name, Set<Post> posts) {
-        this.id = id;
-        this.name = name;
-        this.posts = posts;
-    }
-
+//    public Tag(UUID id, String name, Set<Post> posts) {
+//        this.id = id;
+//        this.name = name;
+//        this.posts = posts;
+//    }
+public Tag(UUID id, String name) {
+    this.id = id;
+    this.name = name;
+}
     public Tag() {
     }
 
