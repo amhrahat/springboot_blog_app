@@ -4,6 +4,7 @@ import com.rahat.blog.domain.dtos.LoginResponseDto;
 import com.rahat.blog.domain.dtos.RegResponseDto;
 import com.rahat.blog.domain.entities.User;
 import com.rahat.blog.repositories.UserRepository;
+import com.rahat.blog.security.JwtTokenProvider;
 import com.rahat.blog.services.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -20,11 +20,16 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder,
+                           AuthenticationManager authenticationManager,
+                           JwtTokenProvider jwtTokenProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
@@ -51,7 +56,9 @@ public class AuthServiceImpl implements AuthService {
 
         authenticationManager.authenticate(authentication);
 
-        return new LoginResponseDto(email, "Login successful");
+        String token = jwtTokenProvider.generateToken(email);
+        long expiresIn = jwtTokenProvider.getExpirationTime();
+
+        return new LoginResponseDto(token, "Bearer", expiresIn, email);
     }
 }
-
