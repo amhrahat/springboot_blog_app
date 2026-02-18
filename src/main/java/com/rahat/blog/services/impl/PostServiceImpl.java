@@ -110,11 +110,20 @@ public class PostServiceImpl implements PostService {
 
         User currentUser = currentUserService.getCurrentUser();
 
-        List<Post> visiblePosts = postRepository.findVisiblePosts(currentUser.getId());
+        List<Post> visiblePosts;
+        if (currentUser == null) {
+
+            visiblePosts = postRepository.findByStatus(PostStatus.PUBLISHED);
+        } else {
+
+            visiblePosts = postRepository.findVisiblePosts(currentUser.getId());
+        }
         return visiblePosts.stream()
                 .map(postMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
+
+
 
     @Override
     public PostDto updatePost(UUID postId, CreatePostDto updatePostDto) {

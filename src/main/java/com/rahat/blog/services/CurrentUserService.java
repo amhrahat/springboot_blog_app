@@ -16,7 +16,7 @@ public class CurrentUserService {
                 SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
-            throw new RuntimeException("No authenticated user");
+            return null;
         }
 
         Object principal = authentication.getPrincipal();
@@ -25,9 +25,6 @@ public class CurrentUserService {
             return blogUserDetail.getUser();
         }
 
-        assert principal != null;
-        throw new RuntimeException(
-                "Unknown principal type: " + principal.getClass()
-        );
+        return null;
     }
 }
