@@ -1,4 +1,4 @@
-package com.rahat.blog.domain.entities;
+package com.rahat.blog.domain.enums;
 
 public enum PostStatus {
     DRAFT,

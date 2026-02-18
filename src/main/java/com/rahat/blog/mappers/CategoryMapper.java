@@ -1,10 +1,10 @@
-package com.rahat.blog.mappes;
+package com.rahat.blog.mappers;
 
 import com.rahat.blog.domain.commands.CreateCategoryCommand;
 import com.rahat.blog.domain.dtos.CategoryDto;
 import com.rahat.blog.domain.dtos.CreateCategoryDto;
 import com.rahat.blog.domain.entities.Category;
-import org.springframework.stereotype.Component;
+
 
 public interface CategoryMapper {
 

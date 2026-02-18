@@ -61,6 +61,6 @@ public class JwtTokenProvider {
     }
 
     public long getExpirationTime() {
-        return jwtExpiration / 1000; // Convert to seconds
+        return jwtExpiration / 1000; 
     }
 }

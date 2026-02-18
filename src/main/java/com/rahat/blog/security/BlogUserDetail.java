@@ -12,12 +12,18 @@ import java.util.List;
 public class BlogUserDetail implements UserDetails {
 
     private final User user;
-    BlogUserDetail(User user){
+
+    BlogUserDetail(User user) {
         this.user = user;
     }
+
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
     }
 
     @Override

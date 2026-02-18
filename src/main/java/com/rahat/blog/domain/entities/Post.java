@@ -1,5 +1,6 @@
 package com.rahat.blog.domain.entities;
 
+import com.rahat.blog.domain.enums.PostStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ public class Post {
     private String content;
 
     @Column(nullable = false)
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private PostStatus status;
 
     @ManyToOne

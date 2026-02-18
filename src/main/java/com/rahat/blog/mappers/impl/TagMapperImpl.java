@@ -1,10 +1,10 @@
-package com.rahat.blog.mappes.impl;
+package com.rahat.blog.mappers.impl;
 
 import com.rahat.blog.domain.commands.CreateTagCommand;
 import com.rahat.blog.domain.dtos.CreateTagDto;
 import com.rahat.blog.domain.dtos.TagDto;
 import com.rahat.blog.domain.entities.Tag;
-import com.rahat.blog.mappes.TagMapper;
+import com.rahat.blog.mappers.TagMapper;
 import org.springframework.stereotype.Component;
 
 @Component

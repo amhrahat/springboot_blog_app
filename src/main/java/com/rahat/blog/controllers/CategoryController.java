@@ -3,7 +3,7 @@ package com.rahat.blog.controllers;
 import com.rahat.blog.domain.commands.CreateCategoryCommand;
 import com.rahat.blog.domain.dtos.CategoryDto;
 import com.rahat.blog.domain.dtos.CreateCategoryDto;
-import com.rahat.blog.mappes.CategoryMapper;
+import com.rahat.blog.mappers.CategoryMapper;
 import com.rahat.blog.services.CategoryService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

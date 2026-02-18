@@ -4,7 +4,7 @@ package com.rahat.blog.controllers;
 import com.rahat.blog.domain.commands.CreateTagCommand;
 import com.rahat.blog.domain.dtos.CreateTagDto;
 import com.rahat.blog.domain.dtos.TagDto;
-import com.rahat.blog.mappes.TagMapper;
+import com.rahat.blog.mappers.TagMapper;
 import com.rahat.blog.services.TagService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

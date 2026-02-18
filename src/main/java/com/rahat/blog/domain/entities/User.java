@@ -1,5 +1,6 @@
 package com.rahat.blog.domain.entities;
 
+import com.rahat.blog.domain.enums.Role;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -12,12 +13,11 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -26,17 +26,27 @@ public class User {
     @Column(nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER;  // Default role
+
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tag> tags = new ArrayList<>();
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    public User(UUID id, String email, String password, String name, List<Post> posts, LocalDateTime createdAt) {
+    // Constructors
+    public User(UUID id, String email, String password, String name, Role role,
+                List<Post> posts, LocalDateTime createdAt) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
+        this.role = role;
         this.posts = posts;
         this.createdAt = createdAt;
     }
@@ -44,6 +54,7 @@ public class User {
     public User() {
     }
 
+    // Getters and Setters
     public UUID getId() {
         return id;
     }
@@ -76,6 +87,14 @@ public class User {
         this.name = name;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public List<Post> getPosts() {
         return posts;
     }
@@ -95,19 +114,13 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(createdAt, user.createdAt);
+        return Objects.equals(id, user.id) && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hashCode(id);
-        result = 31 * result + Objects.hashCode(email);
-        result = 31 * result + Objects.hashCode(password);
-        result = 31 * result + Objects.hashCode(name);
-        result = 31 * result + Objects.hashCode(createdAt);
-        return result;
+        return Objects.hash(id, email);
     }
 
     @Override
@@ -115,9 +128,8 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
-                ", posts=" + posts +
+                ", role=" + role +
                 ", createdAt=" + createdAt +
                 '}';
     }

@@ -1,16 +1,15 @@
 package com.rahat.blog.services.impl;
 
-import com.rahat.blog.domain.commands.CreateCategoryCommand;
 import com.rahat.blog.domain.commands.CreateTagCommand;
-import com.rahat.blog.domain.dtos.CategoryDto;
 import com.rahat.blog.domain.dtos.TagDto;
-import com.rahat.blog.domain.entities.Category;
 import com.rahat.blog.domain.entities.Tag;
-import com.rahat.blog.mappes.CategoryMapper;
-import com.rahat.blog.mappes.TagMapper;
-import com.rahat.blog.repositories.CategoryRepository;
+import com.rahat.blog.domain.entities.User;
+import com.rahat.blog.mappers.TagMapper;
 import com.rahat.blog.repositories.TagRepository;
+import com.rahat.blog.services.CurrentUserService;
 import com.rahat.blog.services.TagService;
+
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,19 +21,25 @@ public class TagServiceImpl implements TagService {
 
     private final TagRepository tagRepository;
     private final TagMapper tagMapper;
+    private final CurrentUserService currentUserService;
 
-    TagServiceImpl(TagRepository tagRepository, TagMapper tagMapper){
+    public TagServiceImpl(TagRepository tagRepository, TagMapper tagMapper, CurrentUserService currentUserService) {
         this.tagRepository = tagRepository;
         this.tagMapper = tagMapper;
+        this.currentUserService = currentUserService;
     }
 
 
     @Override
     public TagDto createTag(CreateTagCommand createTagCommand) {
+        User currentUser = currentUserService.getCurrentUser();
+
         Tag tag = new Tag(
                 null,
-                createTagCommand.name()
+                createTagCommand.name(),
+                currentUser
         );
+
         Tag saved = tagRepository.save(tag);
         return tagMapper.toDto(saved);
     }
@@ -55,7 +60,24 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public void deleteTag(UUID tagId) {
-        tagRepository.deleteById(tagId);
+
+        User currentUser = currentUserService.getCurrentUser();
+
+        Tag tag = tagRepository.findById(tagId)
+                .orElseThrow(() ->
+                        new RuntimeException("Tag not found"));
+        System.out.println(tag.getAuthor().getId());
+        System.out.println(currentUser.getId());
+        if (!tag.getAuthor().getId()
+                .equals(currentUser.getId())) {
+
+
+            throw new AccessDeniedException(
+                    "You can delete only your own tags"
+            );
+        }
+
+        tagRepository.delete(tag);
     }
 
 }

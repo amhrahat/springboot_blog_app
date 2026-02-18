@@ -26,10 +26,17 @@ public class Tag {
 //        this.name = name;
 //        this.posts = posts;
 //    }
-public Tag(UUID id, String name) {
-    this.id = id;
-    this.name = name;
-}
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User author;
+
+
+    public Tag(UUID id, String name, User author) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+    }
+
     public Tag() {
     }
 
@@ -55,6 +62,14 @@ public Tag(UUID id, String name) {
 
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     @Override
