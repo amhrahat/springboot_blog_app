@@ -5,6 +5,7 @@ import com.rahat.blog.domain.dtos.RegResponseDto;
 import com.rahat.blog.domain.entities.User;
 import com.rahat.blog.repositories.UserRepository;
 import com.rahat.blog.security.JwtTokenProvider;
+import com.rahat.blog.security.SendOTP;
 import com.rahat.blog.services.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,15 +22,18 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
+    private final SendOTP sendOTP;
 
     public AuthServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
                            AuthenticationManager authenticationManager,
-                           JwtTokenProvider jwtTokenProvider) {
+                           JwtTokenProvider jwtTokenProvider,
+                            SendOTP sendOTP) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.sendOTP = sendOTP;
     }
 
     @Override
@@ -37,6 +41,8 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.existsByEmail(email)){
             throw new IllegalStateException("Email already exists");
         }
+        String otp = sendOTP.generateOtp();
+        sendOTP.sendOtpEmail(email,otp);
         User user = new User();
         user.setName(name);
         user.setEmail(email);
