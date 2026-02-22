@@ -1,9 +1,7 @@
 package com.rahat.blog.services.impl;
 
-import com.rahat.blog.domain.dtos.CategoryDto;
 import com.rahat.blog.domain.dtos.CreatePostDto;
 import com.rahat.blog.domain.dtos.PostDto;
-import com.rahat.blog.domain.dtos.TagDto;
 import com.rahat.blog.domain.entities.*;
 import com.rahat.blog.domain.enums.PostStatus;
 import com.rahat.blog.exceptions.ResourceNotFoundException;
@@ -12,10 +10,8 @@ import com.rahat.blog.mappers.PostMapper;
 import com.rahat.blog.repositories.CategoryRepository;
 import com.rahat.blog.repositories.PostRepository;
 import com.rahat.blog.repositories.TagRepository;
-import com.rahat.blog.services.CurrentUserService;
+import com.rahat.blog.security.CurrentUserService;
 import com.rahat.blog.services.PostService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 

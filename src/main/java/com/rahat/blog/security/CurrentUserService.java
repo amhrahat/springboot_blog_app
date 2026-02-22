@@ -1,11 +1,10 @@
-package com.rahat.blog.services;
+package com.rahat.blog.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.rahat.blog.domain.entities.User;
-import com.rahat.blog.security.BlogUserDetail;
 
 @Service
 public class CurrentUserService {

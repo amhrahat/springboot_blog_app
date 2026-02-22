@@ -7,4 +7,5 @@ import com.rahat.blog.domain.dtos.RegResponseDto;
 public interface AuthService {
     RegResponseDto registration (String name, String email, String password);
     LoginResponseDto login(String email, String password);
+    void verifyOtp(String email, String otp);
 }

@@ -1,9 +1,6 @@
 package com.rahat.blog.controllers;
 
-import com.rahat.blog.domain.dtos.LoginRequestDto;
-import com.rahat.blog.domain.dtos.LoginResponseDto;
-import com.rahat.blog.domain.dtos.RegResponseDto;
-import com.rahat.blog.domain.dtos.RegiRequestDto;
+import com.rahat.blog.domain.dtos.*;
 import com.rahat.blog.services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -39,6 +36,19 @@ public class AuthController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyOtp(
+            @RequestBody VerifyRequestDto request) {
+
+        authService.verifyOtp(
+                request.email(),
+                request.otp()
+        );
+
+        return ResponseEntity.ok("Email verified successfully");
+    }
+
 }
 
 

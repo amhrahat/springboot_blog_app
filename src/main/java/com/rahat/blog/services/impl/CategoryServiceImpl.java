@@ -3,12 +3,11 @@ package com.rahat.blog.services.impl;
 import com.rahat.blog.domain.commands.CreateCategoryCommand;
 import com.rahat.blog.domain.dtos.CategoryDto;
 import com.rahat.blog.domain.entities.Category;
-import com.rahat.blog.domain.entities.Tag;
 import com.rahat.blog.domain.entities.User;
 import com.rahat.blog.mappers.CategoryMapper;
 import com.rahat.blog.repositories.CategoryRepository;
 import com.rahat.blog.services.CategoryService;
-import com.rahat.blog.services.CurrentUserService;
+import com.rahat.blog.security.CurrentUserService;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 

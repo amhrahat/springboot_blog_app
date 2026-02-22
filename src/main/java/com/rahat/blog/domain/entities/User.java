@@ -42,15 +42,18 @@ public class User {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
+    private boolean verified;
 
     public User(UUID id, String email, String password, String name, Role role,
-                 LocalDateTime createdAt) {
+                 LocalDateTime createdAt, boolean verified) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.role = role;
         this.createdAt = createdAt;
+        this.verified = verified;
     }
 
     public User() {
@@ -127,6 +130,14 @@ public class User {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     @Override

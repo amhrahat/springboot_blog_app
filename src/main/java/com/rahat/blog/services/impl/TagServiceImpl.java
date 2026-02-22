@@ -6,12 +6,9 @@ import com.rahat.blog.domain.entities.Tag;
 import com.rahat.blog.domain.entities.User;
 import com.rahat.blog.mappers.TagMapper;
 import com.rahat.blog.repositories.TagRepository;
-import com.rahat.blog.security.SendOTP;
-import com.rahat.blog.services.CurrentUserService;
+import com.rahat.blog.security.CurrentUserService;
 import com.rahat.blog.services.TagService;
 
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
