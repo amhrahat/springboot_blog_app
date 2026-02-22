@@ -21,13 +21,9 @@ public class Tag {
     @ManyToMany(mappedBy = "tags")
     private Set<Post> posts = new HashSet<>();
 
-//    public Tag(UUID id, String name, Set<Post> posts) {
-//        this.id = id;
-//        this.name = name;
-//        this.posts = posts;
-//    }
+
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "author_id", nullable = false)
     private User author;
 
 

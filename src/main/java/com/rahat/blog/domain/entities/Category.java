@@ -18,17 +18,19 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
-//    public Category(UUID id, String name, List<Post> posts) {
-//        this.id = id;
-//        this.name = name;
-//        this.posts = posts;
-//    }
-    public Category(UUID id, String name) {
+    @ManyToOne
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
+
+    public Category(UUID id, String name, User author) {
         this.id = id;
         this.name = name;
+        this.author = author;
 
 }
 
@@ -51,9 +53,19 @@ public class Category {
         this.name = name;
     }
 
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
+
     public List<Post> getPosts() {
         return posts;
     }
+
+
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;

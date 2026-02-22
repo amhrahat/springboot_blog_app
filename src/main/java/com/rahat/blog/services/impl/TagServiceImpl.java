@@ -41,6 +41,7 @@ public class TagServiceImpl implements TagService {
         );
 
         Tag saved = tagRepository.save(tag);
+        currentUser.setTags(List.of(tag));
         return tagMapper.toDto(saved);
     }
 
@@ -66,8 +67,6 @@ public class TagServiceImpl implements TagService {
         Tag tag = tagRepository.findById(tagId)
                 .orElseThrow(() ->
                         new RuntimeException("Tag not found"));
-        System.out.println(tag.getAuthor().getId());
-        System.out.println(currentUser.getId());
         if (!tag.getAuthor().getId()
                 .equals(currentUser.getId())) {
 

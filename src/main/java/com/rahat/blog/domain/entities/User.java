@@ -36,25 +36,27 @@ public class User {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags = new ArrayList<>();
 
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Category> categories = new ArrayList<>();
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    // Constructors
+
     public User(UUID id, String email, String password, String name, Role role,
-                List<Post> posts, LocalDateTime createdAt) {
+                 LocalDateTime createdAt) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
         this.role = role;
-        this.posts = posts;
         this.createdAt = createdAt;
     }
 
     public User() {
     }
 
-    // Getters and Setters
+
     public UUID getId() {
         return id;
     }
@@ -101,6 +103,22 @@ public class User {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     public LocalDateTime getCreatedAt() {

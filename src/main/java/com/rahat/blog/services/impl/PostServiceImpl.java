@@ -87,6 +87,11 @@ public class PostServiceImpl implements PostService {
         );
 
         Post savedPost = postRepository.save(post);
+        category.setPosts(List.of(post));
+        for (Tag tag : tags) {
+            tag.getPosts().add(post);
+        }
+        currentUser.setPosts(List.of(post));
         return postMapper.toDto(savedPost);
     }
 
