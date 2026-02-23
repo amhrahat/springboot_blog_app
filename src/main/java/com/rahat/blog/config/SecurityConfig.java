@@ -16,6 +16,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity
@@ -49,6 +51,7 @@ public class SecurityConfig {
                         ).permitAll()
 
                         .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/api/text/**").permitAll()
 
                         .requestMatchers(HttpMethod.GET, "/api/v1/posts/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
@@ -90,5 +93,14 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+
+    @Configuration
+    public static class RestTemplateConfig {
+
+        @Bean
+        public RestTemplate restTemplate() {
+            return new RestTemplate();
+        }
     }
 }
