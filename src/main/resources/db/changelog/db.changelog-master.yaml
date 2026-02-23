@@ -3,3 +3,5 @@ databaseChangeLog:
 #      file: db/changelog/changes/002-add-verified-to-users.sql
   - include:
       file: db/changelog/changes/003-create-verification-tokens.sql
+  - include:
+      file: db/changelog/changes/004-update-verification-token-email-constraint.sql

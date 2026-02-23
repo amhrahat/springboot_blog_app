@@ -34,6 +34,11 @@ public interface VerificationTokenRepository
         WHERE v.expiryDate < :now
     """)
     void deleteAllExpired(@Param("now") LocalDateTime now);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM VerificationToken v WHERE v.email = :email")
+    void deleteByEmail(@Param("email") String email);
 }
 
 

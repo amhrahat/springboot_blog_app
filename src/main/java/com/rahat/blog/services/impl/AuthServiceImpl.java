@@ -49,18 +49,45 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public RegResponseDto registration(String name, String email, String password) {
-        if (userRepository.existsByEmail(email)) {
-            throw new IllegalStateException("Email already exists");
+
+        Optional<User> existingUserOtp = userRepository.findByEmail(email);
+
+        if (existingUserOtp.isPresent()) {
+
+            User existingUser = existingUserOtp.get();
+
+            if (existingUser.isVerified()) {
+                throw new IllegalStateException("Email already registered");
+            }
+
+            String otp = userVerificationService.generateOtp();
+            String hashedOtp = userVerificationService.hashOtp(otp);
+
+            verificationTokenRepository.deleteByEmail(email);
+
+            VerificationToken token = new VerificationToken();
+            token.setEmail(email);
+            token.setOtpHash(hashedOtp);
+            token.setExpiryDate(LocalDateTime.now().plusMinutes(2));
+
+            verificationTokenRepository.save(token);
+            userVerificationService.sendOtpEmail(email, otp);
+
+            return new RegResponseDto(existingUser.getName(), existingUser.getEmail());
         }
+
         String otp = userVerificationService.generateOtp();
-        VerificationToken token = new VerificationToken();
         String hashedOtp = userVerificationService.hashOtp(otp);
+
+        VerificationToken token = new VerificationToken();
         token.setEmail(email);
         token.setOtpHash(hashedOtp);
         token.setExpiryDate(LocalDateTime.now().plusMinutes(2));
-        userVerificationService.sendOtpEmail(email, otp);
+
         verificationTokenRepository.save(token);
+        userVerificationService.sendOtpEmail(email, otp);
 
         User user = new User();
         user.setName(name);
@@ -70,6 +97,7 @@ public class AuthServiceImpl implements AuthService {
         user.setVerified(false);
 
         userRepository.save(user);
+
         return new RegResponseDto(user.getName(), user.getEmail());
     }
 
