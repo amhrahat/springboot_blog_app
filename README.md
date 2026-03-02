@@ -6,7 +6,7 @@ This project is a Spring Boot REST API for a modern blog platform with JWT authe
 The application supports:
 - User registration with email verification
 - Secure login with JWT token authentication
-- Draft/published post workflow with pagination support
+- Draft/published post workflow
 - Category and tag management
 - CSRF protection
 - Comprehensive Swagger/OpenAPI documentation
